@@ -3,12 +3,17 @@ package com.github.lacquerednocap.FirstJavaEE;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Objects;
 
+
+@WebServlet("/greeting")
 public class FirstServlet extends HttpServlet {
+
+    private final String link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
@@ -17,7 +22,7 @@ public class FirstServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
 
@@ -28,8 +33,8 @@ public class FirstServlet extends HttpServlet {
 
 
         if (Objects.equals(firstName, null) && Objects.equals(lastName, null)) {
-            firstName = "<first name>";
-            lastName = "<last name>";
+            firstName = "FirstName";
+            lastName = "LastName";
         } else if ( !(firstName.equals("Arkady") && lastName.equals("Novokhatsky")) ) {
             response.sendRedirect(link);
         }
@@ -40,7 +45,7 @@ public class FirstServlet extends HttpServlet {
         PrintWriter pw = response.getWriter();
         pw.println("<html>");
         pw.println("<h1>" + count + "</h1>");
-        pw.println("<h1> Hello, " + firstName + " " + lastName + "</h1>");
+        pw.println("<h1> Hello, " + firstName + " " + lastName.charAt(0) + ". " + "</h1>");
         pw.println("</html>");
     }
 }
